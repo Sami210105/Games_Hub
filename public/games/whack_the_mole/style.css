@@ -1,215 +1,272 @@
+/* General reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Full screen game container and body */
 body {
-    background-color: #1a1a1a; /* fallback if image fails */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    image-rendering: pixelated;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
+  background-color: #1a1a1a; /* fallback */
+  background-size: cover;
+  background-position: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-container {
-    text-align: center;
-    background-color: transparent;
-    background-image: none;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+  text-align: center;
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 h1 {
-    color: #ffeb3b;
-    text-shadow: 3px 3px 0 #5d4037, -1px -1px 0 #5d4037, 1px -1px 0 #5d4037, -1px 1px 0 #5d4037, 1px 1px 0 #5d4037;
-    margin-bottom: 20px;
-    font-size: 4rem;
+  color: #ffeb3b;
+  text-shadow:
+    3px 3px 0 #5d4037,
+    -1px -1px 0 #5d4037,
+    1px -1px 0 #5d4037,
+    -1px 1px 0 #5d4037,
+    1px 1px 0 #5d4037;
+  margin-bottom: 20px;
+  font-size: 4rem;
 }
 
+/* Game controls */
 .game-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
+/* Difficulty control */
+.difficulty-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.difficulty-control select {
+  padding: 5px 10px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Score and time display */
 .score-display, .time-display {
-    font-size: 2rem;
-    color: #fff8e1;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 #5d4037;
-    background-color: #6d4c41;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+  font-size: 2rem;
+  color: #fff8e1;
+  font-weight: bold;
+  text-shadow: 2px 2px 0 #5d4037;
+  background-color: #6d4c41;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
 
+/* Buttons */
 button {
-    background-color: #a1887f;
-    color: #fff8e1;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-weight: bold;
-    box-shadow: 0 6px 0 #5d4037, 0 0 10px rgba(0,0,0,0.3);
-    text-shadow: 1px 1px 1px #5d4037;
+  background-color: #a1887f;
+  color: #fff8e1;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  box-shadow: 0 6px 0 #5d4037, 0 0 10px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 1px #5d4037;
 }
 
 button:hover {
-    background-color: #bcaaa4;
-    transform: translateY(-2px);
+  background-color: #bcaaa4;
+  transform: translateY(-2px);
 }
 
 button:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #5d4037;
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #5d4037;
 }
 
+/* Game board area */
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin: 0 auto;
-    width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 0 auto;
+  width: fit-content;
 }
 
+/* Holes */
 .hole {
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(ellipse at center, #5d4037 0%, #3e2723 70%);
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s;
-    border-radius: 50%;
-    box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.3);
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(ellipse at center, #5d4037 0%, #3e2723 70%);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 50%;
+  box-shadow: inset 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.3);
 }
 
 .hole:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
+/* Mole styling */
 .mole {
-    width: 80%;
-    height: 80%;
-    background: 
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><defs><radialGradient id="moleGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"><stop offset="0%" stop-color="%23795548"/><stop offset="100%" stop-color="%235D4037"/></radialGradient></defs><circle cx="70" cy="70" r="65" fill="url(%23moleGradient)"/><circle cx="50" cy="55" r="8" fill="black"/><circle cx="90" cy="55" r="8" fill="black"/><path d="M60,90 Q70,100 80,90" stroke="black" stroke-width="4" fill="none"/><ellipse cx="45" cy="45" rx="15" ry="10" fill="url(%23moleGradient)"/><ellipse cx="95" cy="45" rx="15" ry="10" fill="url(%23moleGradient)"/><circle cx="70" cy="75" r="5" fill="%23D7CCC8"/></svg>') no-repeat center;
-    background-size: contain;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.2s;
-    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+  width: 80%;
+  height: 80%;
+  background: 
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><defs><radialGradient id="moleGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"><stop offset="0%" stop-color="%23795548"/><stop offset="100%" stop-color="%235D4037"/></radialGradient></defs><circle cx="70" cy="70" r="65" fill="url(%23moleGradient)"/><circle cx="50" cy="55" r="8" fill="black"/><circle cx="90" cy="55" r="8" fill="black"/><path d="M60,90 Q70,100 80,90" stroke="black" stroke-width="4" fill="none"/><ellipse cx="45" cy="45" rx="15" ry="10" fill="url(%23moleGradient)"/><ellipse cx="95" cy="45" rx="15" ry="10" fill="url(%23moleGradient)"/><circle cx="70" cy="75" r="5" fill="%23D7CCC8"/></svg>') no-repeat center;
+  background-size: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s;
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
 }
 
+/* Hammer styling */
 .hammer {
-    width: 100px;
-    height: 100px;
-    background: 
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="hammerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%239C7C6C"/><stop offset="100%" stop-color="%236D4C41"/></linearGradient></defs><rect x="20" y="15" width="60" height="20" rx="5" fill="url(%23hammerGradient)"/><rect x="35" y="35" width="30" height="50" fill="url(%23hammerGradient)"/><rect x="30" y="85" width="40" height="15" rx="5" fill="%23333333"/></svg>') no-repeat center;
-    background-size: contain;
-    position: absolute;
-    pointer-events: none;
-    transform: rotate(-30deg);
-    transform-origin: 20% 20%;
-    z-index: 10;
-    display: none;
-    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
+  width: 100px;
+  height: 100px;
+  background: 
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="hammerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%239C7C6C"/><stop offset="100%" stop-color="%236D4C41"/></linearGradient></defs><rect x="20" y="15" width="60" height="20" rx="5" fill="url(%23hammerGradient)"/><rect x="35" y="35" width="30" height="50" fill="url(%23hammerGradient)"/><rect x="30" y="85" width="40" height="15" rx="5" fill="%23333333"/></svg>') no-repeat center;
+  background-size: contain;
+  position: absolute;
+  pointer-events: none;
+  transform: rotate(-30deg);
+  transform-origin: 20% 20%;
+  z-index: 10;
+  display: none;
+  filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
 }
 
 .hammer.active {
-    transform: rotate(10deg);
+  transform: rotate(10deg);
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .hole {
-        width: 120px;
-        height: 120px;
-    }
+  .hole {
+    width: 120px;
+    height: 120px;
+  }
 
-    h1 {
-        font-size: 2.5rem;
-    }
+  h1 {
+    font-size: 2.5rem;
+  }
 
-    .game-controls {
-        gap: 15px;
-    }
+  .game-controls {
+    gap: 15px;
+  }
 
-    .score-display, .time-display {
-        font-size: 1.5rem;
-        padding: 8px 15px;
-    }
+  .score-display, .time-display {
+    font-size: 1.5rem;
+    padding: 8px 15px;
+  }
 
-    button {
-        padding: 10px 20px;
-        font-size: 1.2rem;
-    }
+  button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 600px) {
-    .game-container {
-        padding: 10px;
-    }
+  .game-container {
+    padding: 10px;
+  }
 
-    .game-board {
-        gap: 15px;
-    }
+  .game-board {
+    gap: 15px;
+  }
 
-    .hole {
-        width: 90px;
-        height: 90px;
-    }
+  .hole {
+    width: 90px;
+    height: 90px;
+  }
 
-    .mole {
-        width: 70px;
-        height: 70px;
-        bottom: -10px;
-    }
+  .mole {
+    width: 70px;
+    height: 70px;
+    bottom: -10px;
+  }
 
-    .hammer {
-        width: 60px;
-        height: 60px;
-    }
+  .hammer {
+    width: 60px;
+    height: 60px;
+  }
 
-    h1 {
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
 
-    .game-controls {
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
+  #pauseBtn, #restartBtn {
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff8e1;
+    background-color: #a1887f;
+    transition: all 0.3s;
+    font-weight: bold;
+    box-shadow: 0 6px 0 #5d4037, 0 0 10px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 1px #5d4037;
+    margin-left: 10px;
+  }
 
-    .score-display, .time-display {
-        font-size: 1.2rem;
-        padding: 6px 12px;
-    }
+  #pauseBtn:hover, #restartBtn:hover {
+    background-color: #bcaaa4;
+    transform: translateY(-2px);
+  }
 
-    button {
-        font-size: 1rem;
-        padding: 8px 16px;
-    }
+  #pauseBtn:active, #restartBtn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #5d4037;
+  }
+
+
+  .game-controls {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .score-display, .time-display {
+    font-size: 1.2rem;
+    padding: 6px 12px;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
 }
