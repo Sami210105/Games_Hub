@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Dynamic API base for local + deployed
   const API_BASE = window.location.hostname === "localhost"
     ? "http://localhost:3001"
-    : "https://games-hub-3igi.onrender.com";
+    : "https://games-hub-380n.onrender.com";
 
   // Handle AI sprite + background generation
   form.addEventListener("submit", async (e) => {
