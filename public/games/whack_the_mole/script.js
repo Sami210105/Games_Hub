@@ -6,17 +6,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('startBtn');
     const hammer = document.getElementById('hammer');
     const gameContainer = document.querySelector('.game-container');
-    
+    const difficultySelect = document.getElementById('difficultySelect');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const restartBtn = document.getElementById('restartBtn');
+
     // Game variables
     let score = 0;
     let time = 30;
-    let gameInterval;
     let moleInterval;
     let timerInterval;
     let isPlaying = false;
+    let isPaused = false;
     let lastHole = 0;
-    
-    // Enter fullscreen automatically
+
+    // Difficulty configurations
+    const difficultySettings = {
+        easy: {
+            molePopInterval: 1500,
+            moleVisibleDuration: 1500,
+            gameDuration: 30
+        },
+        moderate: {
+            molePopInterval: 1000,
+            moleVisibleDuration: 1200,
+            gameDuration: 30
+        },
+        difficult: {
+            molePopInterval: 600,
+            moleVisibleDuration: 900,
+            gameDuration: 30
+        }
+    };
+
+    // Load persisted difficulty
+    function loadDifficulty() {
+        const savedDifficulty = localStorage.getItem('whackDifficulty');
+        if (savedDifficulty && difficultySettings[savedDifficulty]) {
+            difficultySelect.value = savedDifficulty;
+        }
+    }
+    loadDifficulty();
+
+    // Save difficulty on change to localStorage
+    difficultySelect.addEventListener('change', () => {
+        localStorage.setItem('whackDifficulty', difficultySelect.value);
+    });
+
+
+
+    // Enter fullscreen automatically on load
     function enterFullscreen() {
         if (!document.fullscreenElement) {
             gameContainer.requestFullscreen().catch(err => {
@@ -24,31 +62,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-    
-    // Try to enter fullscreen when the page loads
     enterFullscreen();
-    
-    // Hammer follow cursor
+
+    // Hammer follows cursor only when playing
     document.addEventListener('mousemove', (e) => {
         if (!isPlaying) return;
-        
+
         hammer.style.display = 'block';
-        hammer.style.left = `${e.pageX - 50}px`;
-        hammer.style.top = `${e.pageY - 50}px`;
+        hammer.style.left = `${e.pageX - hammer.offsetWidth / 2}px`;
+        hammer.style.top = `${e.pageY - hammer.offsetHeight / 2}px`;
     });
-    
+
     // Hammer click animation
     document.addEventListener('mousedown', () => {
         if (!isPlaying) return;
-        
+
         hammer.classList.add('active');
     });
-    
     document.addEventListener('mouseup', () => {
         hammer.classList.remove('active');
     });
-    
-    // Start game
+
+    // Start or reset game on button click
     startBtn.addEventListener('click', () => {
         if (isPlaying) {
             resetGame();
@@ -56,158 +91,176 @@ document.addEventListener('DOMContentLoaded', () => {
             startGame();
         }
     });
-    
-    // Game functions
+
+    startBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            resetGame();
+        } else {
+            startGame();
+        }
+    });
+
+    // Pause button click toggles pause/resume
+    pauseBtn.addEventListener('click', () => {
+        if (!isPlaying) return;
+
+        if (!isPaused) {
+            pauseGame();
+        } else {
+            resumeGame();
+        }
+    });
+
+    // Restart button restarts game anytime during play
+    restartBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            resetGame();
+        }
+    });
+
+    // Start the game
     function startGame() {
         isPlaying = true;
+        isPaused = false;
         score = 0;
-        time = 30;
+
+        // Show pause and restart buttons, hide start button
+        startBtn.style.display = 'none';
+        pauseBtn.style.display = 'inline-block';
+        restartBtn.style.display = 'inline-block';
+        pauseBtn.textContent = 'Pause';
+
+        // Get difficulty config
+        const difficulty = difficultySelect.value;
+        const settings = difficultySettings[difficulty];
+
+        time = settings.gameDuration;
         scoreDisplay.textContent = score;
         timeDisplay.textContent = time;
         startBtn.textContent = 'Reset Game';
-        
-        // Start mole popping up
-        moleInterval = setInterval(popUpRandomMole, 1200);
-        
-        // Start timer
+
+        moleInterval = setInterval(popUpRandomMole, settings.molePopInterval);
+
         timerInterval = setInterval(() => {
             time--;
             timeDisplay.textContent = time;
-            
+
             if (time <= 0) {
                 endGame();
             }
         }, 1000);
     }
-    
+
+    function pauseGame() {
+        isPaused = true;
+        pauseBtn.textContent = 'Resume';
+        clearInterval(moleInterval); // stop popping moles
+    }
+
+    function resumeGame() {
+        isPaused = false;
+        pauseBtn.textContent = 'Pause';
+
+        // Resume mole popping with current difficulty interval
+        const difficulty = difficultySelect.value;
+        const settings = difficultySettings[difficulty];
+        moleInterval = setInterval(popUpRandomMole, settings.molePopInterval);
+    }
+
+    // Reset game
     function resetGame() {
         clearInterval(moleInterval);
         clearInterval(timerInterval);
-        holes.forEach(hole => {
-            if (hole.querySelector('.mole')) {
-                hole.removeChild(hole.querySelector('.mole'));
-            }
-        });
+        removeAllMoles();
+
+        // Reset buttons
+        isPlaying = false;
+        isPaused = false;
+        pauseBtn.style.display = 'none';
+        restartBtn.style.display = 'none';
+        startBtn.style.display = 'inline-block';
+        startBtn.textContent = 'Start Game';
         startGame();
     }
-    
+
+    // End game
     function endGame() {
         isPlaying = false;
+        isPaused = false;
         clearInterval(moleInterval);
         clearInterval(timerInterval);
+        removeAllMoles();
+        // Reset buttons
+        pauseBtn.style.display = 'none';
+        restartBtn.style.display = 'none';
+        startBtn.style.display = 'inline-block';
         startBtn.textContent = 'Start Game';
+
         setTimeout(() => {
             alert(`Game Over! Your final score is ${score}`);
         }, 100);
     }
-    
+
+    // Remove all current moles
+    function removeAllMoles() {
+        holes.forEach(hole => {
+            const mole = hole.querySelector('.mole');
+            if (mole) mole.remove();
+        });
+    }
+
+    // Pop up a random mole
     function popUpRandomMole() {
         if (!isPlaying) return;
-        
-        // Remove any existing moles
-        holes.forEach(hole => {
-            if (hole.querySelector('.mole')) {
-                hole.removeChild(hole.querySelector('.mole'));
-            }
-        });
-        
-        // Get a random hole that's not the same as last time
+
+        // Remove any existing moles before showing new
+        removeAllMoles();
+
         let randomHole;
         do {
             randomHole = Math.floor(Math.random() * holes.length);
         } while (randomHole === lastHole);
-        
         lastHole = randomHole;
-        
-        // Create mole
+
+        // Create mole element
         const mole = document.createElement('div');
         mole.classList.add('mole');
         holes[randomHole].appendChild(mole);
-        
-        // Whack the mole
+
+        // Whack mole event
         mole.addEventListener('click', (e) => {
             if (!isPlaying) return;
-            
+
             e.stopPropagation();
             score++;
             scoreDisplay.textContent = score;
-            
-            // Add hit animation
+
+            // Animate hit mole
             mole.style.transform = 'translateX(-50%) scale(0.9)';
             mole.style.filter = 'brightness(1.5) drop-shadow(0 0 5px rgba(255,255,255,0.7))';
-            
+
             setTimeout(() => {
                 mole.remove();
             }, 100);
-            
+
             // Hammer hit effect
             hammer.classList.add('active');
             setTimeout(() => {
                 hammer.classList.remove('active');
             }, 100);
         });
-        
-        // Mole disappears after a while
+
+        // Mole disappears after duration based on difficulty
+        const moleVisibleDuration = difficultySettings[difficultySelect.value].moleVisibleDuration;
         setTimeout(() => {
             if (mole.parentNode) {
                 mole.remove();
             }
-        }, 1200);
+        }, moleVisibleDuration);
     }
-    
-    // Sound effects
+
+    // Sound effect function (can be expanded)
     function playSound() {
-        const sounds = [
-            'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...',
-            'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...',
-            'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...'
-        ];
-        const sound = new Audio(sounds[Math.floor(Math.random() * sounds.length)]);
-        sound.volume = 0.3;
-        sound.play().catch(e => console.log("Audio play failed:", e));
+        // Implement sound effect logic here if desired
     }
-});
-// ✅ EXPORT GAME FEATURE
-document.getElementById('exportBtn').addEventListener('click', () => {
-  const zip = new JSZip();
-
-  // HTML
-  fetch('index.html')
-    .then(res => res.text())
-    .then(html => {
-      zip.file("index.html", html);
-
-      // CSS
-      return fetch('style.css');
-    })
-    .then(res => res.text())
-    .then(css => {
-      zip.file("style.css", css);
-
-      // JavaScript
-      return fetch('script.js');
-    })
-    .then(res => res.text())
-    .then(js => {
-      zip.file("script.js", js);
-
-      // Add background image data if available
-      const settings = JSON.parse(localStorage.getItem("gameSettings"));
-      if (settings?.backgroundImage) {
-        zip.file("background.txt", settings.backgroundImage);
-        if (settings.prompt) zip.file("prompt.txt", settings.prompt);
-      }
-
-      // Create and download the zip
-      zip.generateAsync({ type: "blob" }).then(content => {
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(content);
-        link.download = "whack-a-mole-export.zip";
-        link.click();
-      });
-    })
-    .catch(err => {
-      console.error("Export failed:", err);
-      alert("Export failed. Check console for details.");
-    });
 });
