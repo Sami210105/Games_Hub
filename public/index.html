@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Hub</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Font -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic AI Background (Segmind output) -->
+  <div class="bg-dynamic"></div>
+
+  <!-- AI Sprite (ClipDrop output) -->
+   <img src="sprites/panda.png" class="sprite-img" alt="AI Sprite" />
+
+  <!-- Start Screen -->
+  <div id="start-screen">
+    <h1>GAME HUB</h1>
+    <button id="start-btn" class="btn btn-outline-light btn-lg">Start</button>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content" style="display: none;">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+          <img src="images/controller.svg" alt="Logo" style="height: 25px; filter: invert(1);" />
+          GAME HUB
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link active" href="#main-content">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#custom-cards">Games</a></li>
+            <li class="nav-item"><a class="nav-link" href="#myCarousel">Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="#footer">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container hero-section text-center py-5 position-relative">
+      <div class="hero-img-wrapper mb-4 position-relative">
+        <img src="images/hero1.jpg" class="img-fluid hero-image" alt="Hero Image" loading="lazy" />
+        <!-- Flicker Button -->
+        <button class="flicker-btn" onclick="scrollToPrompt()">Play Now</button>
+      </div>
+
+      <h1 class="display-5 fw-bold lh-1 mb-3" style="color: #7a529b !important;">
+        Create and Customize Games with Just a Prompt
+      </h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        Quickly design and personalize classic games like Flappy Bird, Tetris, and more — all without writing a single line of code. Powered by AI, GAME HUB lets you change characters, themes, difficulty, and logic through simple text prompts. Export your game and start playing instantly.
+      </p>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-get-started btn-lg px-4 me-md-2" onclick="scrollToPrompt()">Get Started</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Explore Features</button>
+      </div>
+    </div>
+
+    <!-- Game Cards -->
+    <div class="container px-4 py-5" id="custom-cards">
+      <h2 class="pb-2 border-bottom">Explore Our Games</h2>
+      <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+
+        <!-- Flappy Bird -->
+        <div class="col">
+          <a href="games/flappy_bird/index.html" class="text-decoration-none">
+            <div class="card card-cover h-100 bg-flappy overlay-dark text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center p-5 text-white text-shadow-1">
+                <h3 class="mb-3 display-6 lh-1 fw-bold text-center">Flappy Bird</h3>
+                <img src="images/flappy.webp" alt="Flappy Bird Icon" width="40" height="40" class="rounded-circle border border-white" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Whack the Mole -->
+        <div class="col">
+          <a href="games/whack_the_mole/index.html" class="text-decoration-none">
+            <div class="card card-cover h-100 bg-mole overlay-dark text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center p-5 text-white text-shadow-1">
+                <h3 class="mb-3 display-6 lh-1 fw-bold text-center">Whack the Mole</h3>
+                <img src="images/whack.png" alt="Whack Mole Icon" width="40" height="40" class="rounded-circle border border-white" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Endless Runner -->
+        <div class="col">
+          <a href="games/speed_runner/index.html" class="text-decoration-none">
+            <div class="card card-cover h-100 bg-runner overlay-dark text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center p-5 text-white text-shadow-1">
+                <h3 class="mb-3 display-6 lh-1 fw-bold text-center">Endless Runner</h3>
+                <img src="images/endless.png" alt="Endless Runner Icon" width="40" height="40" class="rounded-circle border border-white" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Tetris -->
+        <div class="col">
+          <a href="games/tetris/index.html" class="text-decoration-none">
+            <div class="card card-cover h-100 bg-tetris overlay-dark text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center p-5 text-white text-shadow-1">
+                <h3 class="mb-3 display-6 lh-1 fw-bold text-center">Tetris</h3>
+                <img src="images/tetris.png" alt="Tetris Icon" width="40" height="40" class="rounded-circle border border-white" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Match 3 -->
+        <div class="col">
+          <a href="games/match3/index.html" class="text-decoration-none">
+            <div class="card card-cover h-100 bg-match overlay-dark text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center p-5 text-white text-shadow-1">
+                <h3 class="mb-3 display-6 lh-1 fw-bold text-center">Match 3</h3>
+                <img src="images/match.png" alt="Match Game Icon" width="40" height="40" class="rounded-circle border border-white" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Crossy road -->
+        <div class="col">
+          <a href="games/crossy_road/index.html" class="text-decoration-none">
+            <div class="card card-cover h-100 bg-crossy overlay-dark text-bg-dark rounded-4 shadow-lg">
+              <div class="d-flex flex-column h-100 justify-content-center align-items-center p-5 text-white text-shadow-1">
+                <h3 class="mb-3 display-6 lh-1 fw-bold text-center">Crossy Road</h3>
+                <img src="images/crossy.png" alt="Match Game Icon" width="40" height="40" class="rounded-circle border border-white" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Prompt Section -->
+    <section class="game-ai-section-glow">
+      <div class="inner-container">
+        <h2 class="mb-4 text-light text-center">Describe Your Game</h2>
+        <form class="game-prompt-form d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <input type="text" class="form-control prompt-input" placeholder="e.g., cute panda sprite, space theme background" />
+          <button type="submit" class="btn btn-get-started">Generate</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Carousel -->
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" class="active" aria-current="true"></button>
+      </div>
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="carousel-fullscreen d-flex justify-content-center align-items-center text-center">
+            <div class="overlay"></div>
+            <div class="carousel-text">
+              <h1>AI-Powered Game Customization</h1>
+              <p>"Describe your game with a few words. Our AI transforms it into a fully themed experience — characters, backgrounds, logic, all reskinned instantly."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-fullscreen d-flex justify-content-center align-items-center text-center">
+            <div class="overlay"></div>
+            <div class="carousel-text">
+              <h1>One-Click Game Export</h1>
+              <p>"Download your creation as a fully playable HTML5 game with just one click. No code. No hassle."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-fullscreen d-flex justify-content-center align-items-center text-center">
+            <div class="overlay"></div>
+            <div class="carousel-text">
+              <h1>Gameplay Parameter Tuning via Prompts</h1>
+              <p>"Too fast? Too easy? Say it. Modify gravity, speed, difficulty and more — all through natural language."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="text-center py-4 mt-5 border-top footer-dark">
+      <p class="mb-0 text-light">
+        © 2025 Game Hub. Project by 
+        <span class="aigniters-glow">Team AIgniters</span> 🔥
+      </p>
+    </footer>
+  </div>
+
+  <!-- Stars Background -->
+  <div class="star-container"></div>
+
+  <!-- Bootstrap + Custom Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Scroll to Prompt Function -->
+  <script>
+    function scrollToPrompt() {
+      document.querySelector('.game-ai-section-glow').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

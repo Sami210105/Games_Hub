@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Flappy Bird</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Menu overlay: Start button, difficulty selector, and high score -->
+  <div id="menu-overlay" role="dialog" aria-modal="true">
+    <h1>Flappy Bird</h1>
+    <button id="start-btn" type="button">Start</button>
+    
+    <label for="difficulty-menu" style="display:block; margin-top: 1rem; font-weight: normal; max-width: 200px; margin-left: auto; margin-right: auto;">
+      Difficulty:
+      <select id="difficulty-menu" aria-label="Select Difficulty Level" style="margin-left: 0.5rem; width: 100%;">
+        <option value="easy">Easy</option>
+        <option value="medium" selected>Medium</option>
+        <option value="hard">Difficult</option>
+      </select>
+    </label>
+    
+    <p style="margin-top:1.5rem;">High Score: <span id="high-score">0</span></p>
+  </div>
+
+  <!-- Game container -->
+  <div id="game-container" class="hidden" role="main" aria-label="Game container">
+    <img id="bird" src="bird.png" alt="Game bird" />
+    <div id="score" aria-live="polite" aria-atomic="true">0</div>
+
+    <!-- Pause and Restart buttons inside game container -->
+    <div id="game-controls" class="hidden" style="position: fixed; top: 20px; right: 20px; z-index: 1000; display:flex; gap: 10px;">
+      <button id="pause-btn" type="button" aria-label="Pause Game">Pause</button>
+      <button id="restart-btn" type="button" aria-label="Restart Game">Restart</button>
+    </div>
+
+    <!-- Game Over overlay with score, high score, difficulty selector, and Play Again -->
+    <div id="game-over" class="hidden" role="alert" aria-hidden="true" style="text-align: center;">
+      <p>Your Score: <strong><span id="final-score">0</span></strong></p>
+      <p>High Score: <strong><span id="final-high-score">0</span></strong></p>
+
+      <label for="difficulty-gameover" style="display:block; margin: 1rem auto; font-weight: normal; max-width: 200px;">
+        Difficulty:
+        <select id="difficulty-gameover" aria-label="Select Difficulty Level" style="margin-left: 0.5rem; width: 100%;">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Difficult</option>
+        </select>
+      </label>
+
+      <button id="gameover-restart-btn" type="button" style="margin-top: 1rem; padding: 10px 20px;">Play Again</button>
+    </div>
+  </div>
+
+  <button id="export-btn" type="button" aria-label="Export Game" style="position:fixed; bottom:20px; right:20px; z-index:999;">
+    Export Game
+  </button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Background Image Injector (optional) -->
+  <script>
+    const settings = JSON.parse(localStorage.getItem("gameSettings"));
+    if (settings?.backgroundImage) {
+      document.body.style.backgroundImage = `url(${settings.backgroundImage})`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+    }
+  </script>
+</body>
+</html>

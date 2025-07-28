@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gemstone Match-3</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="game-container">
+        <div class="game-header">
+            <div>Score: <span id="score">0</span></div>
+            <div>Moves: <span id="moves">25</span></div>
+        </div>
+        <div class="game-board" id="board"></div>
+    </div>
+
+    <div class="game-over" id="game-over">
+        <div class="game-over-content">
+            <h2>Game Over!</h2>
+            <p>Your final score:</p>
+            <div class="final-score" id="final-score">0</div>
+            <button id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
